@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">NGFTest</string>
+    <string name="main_menu_title">Система тестирования знаний сотрудников войск национальной гвардии РФ</string>
+    <string name="start_test_main_menu">Начать тестирование</string>
+    <string name="results_main_menu">Результаты</string>
+    <string name="exit_main_menu">Выход</string>
+    <string name="toolbar_title_main_menu">Проверка знаний</string>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_login">
+        Введите, пожалуйста, свое <b>имя</b>, <b>фамилию</b> и <b>отчество</b>.\nПосле того, как Вы нажмете \"Начать тест\", Вам будет предложено <b>60</b> вопросов и 24 минуты времени.\n
+    </string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="patronymic">Отчество</string>
+    <string name="startTest">Начать тест</string>
+    <string name="empty_field">Заполните все поля</string>
+</resources>
