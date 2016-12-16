@@ -1,18 +1,16 @@
 package ru.mvd.national.guard.forces.test;
 
-import android.util.Log;
+
+import android.content.Context;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 
 /**
@@ -21,28 +19,42 @@ import java.nio.charset.StandardCharsets;
 
 public class DataSet {
 
-    private static final String TAG = "MyLog";
-
     private int SET_CAPACITY = 500;
-    private int size = 0;
+    private int size;
 
-    private DataField[] dataSet = new DataField[SET_CAPACITY];
+    private DataField[] dataSet;
 
-    public DataSet() throws FileNotFoundException {
-        /*String cS = "Форма правления Российской Федерации:*#республиканская*монархическая*теократическая*конституционная";
-        dataSet[size] = new DataField(cS);
-        size++;
-        cS = "По соотношению наименований государства:*#Российская Федерация и Россия равнозначны*Российская Федерация – самое корректное*Россия – самое корректное*Русь, Российская империя, СССР, Российская Федерация и Россия равнозначны";
-        dataSet[size] = new DataField(cS);
-        size++;*/
 
+    public DataSet(Context context) throws IOException  {
+        dataSet = new DataField[SET_CAPACITY];
+        size = 0;
+        loadFile(context);
     }
+
+    private void loadFile(Context context) {
+        try {
+            InputStream inputStream = context.getAssets().open("text.txt");
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String row;
+                while ((row = bufferedReader.readLine()) != null) {
+                    dataSet[size] = new DataField(row);
+                    size++;
+                }
+                inputStream.close();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     public DataField getDataField(int i) {
         return dataSet[i];
     }
 
     public int getSize() {
-        return SET_CAPACITY;
+        return size;
     }
 }

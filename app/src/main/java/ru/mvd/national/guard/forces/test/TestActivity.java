@@ -3,15 +3,17 @@ package ru.mvd.national.guard.forces.test;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class TestActivity extends AppCompatActivity {
 
     private DataSet test;
+
+    private Button nextQuestion;
 
     private TextView fio;
     private TextView question;
@@ -26,16 +28,18 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        Log.d("test", "We're in TestActivity");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbarSetting(toolbar);
-        test = new DataSet();
-        /*try {
-            test = new DataSet();
-        } catch (FileNotFoundException e) {
+
+        try {
+            test = new DataSet(TestActivity.this);
+        } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+
+        nextQuestion = (Button)findViewById(R.id.toNextQuestionButton);
 
         fio = (TextView)findViewById(R.id.fio);
         fio.setText(getIntent().getStringExtra("name"));
@@ -44,6 +48,7 @@ public class TestActivity extends AppCompatActivity {
         ans2 = (TextView)findViewById(R.id.ans2);
         ans3 = (TextView)findViewById(R.id.ans3);
         ans4 = (TextView)findViewById(R.id.ans4);
+
         textFieldInitial();
         currentInx++;
 
@@ -67,8 +72,12 @@ public class TestActivity extends AppCompatActivity {
         ans4.setText(test.getDataField(currentInx).getAns4());
     }
 
-    public void nextQuestion(View view) {
+    public void nextQuestionOnClick(View view) {
         textFieldInitial();
         currentInx++;
+        if (currentInx == test.getSize()) {
+            nextQuestion.setClickable(false);
+        }
     }
+
 }

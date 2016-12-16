@@ -34,6 +34,10 @@ public class DataField {
         return question;
     }
 
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
     public String getAns1() {
         return ans1;
     }
