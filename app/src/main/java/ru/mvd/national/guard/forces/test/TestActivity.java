@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class TestActivity extends AppCompatActivity {
 
-    private DataSet test;
+    private TestQuestionSet test;
 
     private Button nextQuestion;
 
@@ -34,7 +34,7 @@ public class TestActivity extends AppCompatActivity {
         toolbarSetting(toolbar);
 
         try {
-            test = new DataSet(TestActivity.this);
+            test = new TestQuestionSet(new DataSet(TestActivity.this));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,11 +65,11 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void textFieldInitial() {
-        question.setText(test.getDataField(currentInx).getQuestion());
-        ans1.setText(test.getDataField(currentInx).getAns1());
-        ans2.setText(test.getDataField(currentInx).getAns2());
-        ans3.setText(test.getDataField(currentInx).getAns3());
-        ans4.setText(test.getDataField(currentInx).getAns4());
+        question.setText(test.getQuestion(currentInx).getQuestion());
+        ans1.setText(test.getQuestion(currentInx).getAns1());
+        ans2.setText(test.getQuestion(currentInx).getAns2());
+        ans3.setText(test.getQuestion(currentInx).getAns3());
+        ans4.setText(test.getQuestion(currentInx).getAns4());
     }
 
     public void nextQuestionOnClick(View view) {
