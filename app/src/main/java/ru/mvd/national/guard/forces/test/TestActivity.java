@@ -11,11 +11,12 @@ import java.io.IOException;
 
 public class TestActivity extends AppCompatActivity {
 
-    private TestQuestionSet test;
+    private User user;
 
     private Button nextQuestion;
 
     private TextView fio;
+    private TextView questionNumber;
     private TextView question;
     private TextView ans1;
     private TextView ans2;
@@ -34,9 +35,9 @@ public class TestActivity extends AppCompatActivity {
         toolbarSetting(toolbar);
 
         try {
-            test = new TestQuestionSet(new DataSet(TestActivity.this));
-        } catch (IOException e) {
-            e.printStackTrace();
+            user = new User(new DataSet(TestActivity.this));
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
         nextQuestion = (Button)findViewById(R.id.toNextQuestionButton);
@@ -44,6 +45,7 @@ public class TestActivity extends AppCompatActivity {
         fio = (TextView)findViewById(R.id.fio);
         fio.setText(getIntent().getStringExtra("name"));
         question = (TextView)findViewById(R.id.question);
+        questionNumber = (TextView)findViewById(R.id.questionNumber);
         ans1 = (TextView)findViewById(R.id.ans1);
         ans2 = (TextView)findViewById(R.id.ans2);
         ans3 = (TextView)findViewById(R.id.ans3);
@@ -51,6 +53,7 @@ public class TestActivity extends AppCompatActivity {
 
         textFieldInitial();
         currentInx++;
+        questionNumber.setText("Вопрос " + currentInx);
 
     }
 
@@ -65,17 +68,17 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void textFieldInitial() {
-        question.setText(test.getQuestion(currentInx).getQuestion());
-        ans1.setText(test.getQuestion(currentInx).getAns1());
-        ans2.setText(test.getQuestion(currentInx).getAns2());
-        ans3.setText(test.getQuestion(currentInx).getAns3());
-        ans4.setText(test.getQuestion(currentInx).getAns4());
+        question.setText(user.getTestQuestion(currentInx).getQuestion());
+        ans1.setText(user.getTestQuestion(currentInx).getAns1());
+        ans2.setText(user.getTestQuestion(currentInx).getAns2());
+        ans3.setText(user.getTestQuestion(currentInx).getAns3());
+        ans4.setText(user.getTestQuestion(currentInx).getAns4());
     }
 
     public void nextQuestionOnClick(View view) {
         textFieldInitial();
         currentInx++;
-        if (currentInx == test.getSize()) {
+        if (currentInx == user.getSize()) {
             nextQuestion.setClickable(false);
         }
     }

@@ -32,6 +32,7 @@ public class TestQuestionSet {
     public DataField getQuestion(int index) {
         return questionSet[index];
     }
+
     public int getSize() {
         return size;
     }
