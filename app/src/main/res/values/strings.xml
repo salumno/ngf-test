@@ -8,12 +8,13 @@
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="title_login">
-        Введите, пожалуйста, свое <b>имя</b>, <b>фамилию</b> и <b>отчество</b>.\nПосле того, как Вы нажмете \"Начать тест\", Вам будет предложено <b>60</b> вопросов и 24 минуты времени.\n
+    <string name="title_login">Введите свое <b>имя</b>, <b>фамилию</b> и <b>отчество</b>.\nПосле того, как Вы нажмете \"Начать тест\", Вам будет предложено <b>60</b> вопросов и 24 минуты времени.\n
     </string>
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="patronymic">Отчество</string>
     <string name="startTest">Начать тест</string>
     <string name="empty_field">Заполните все поля</string>
+    <string name="next">next</string>
+    <string name="question_number_this">"Вопрос "</string>
 </resources>
