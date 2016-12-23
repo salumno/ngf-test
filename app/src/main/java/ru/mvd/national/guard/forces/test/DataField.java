@@ -11,7 +11,7 @@ public class DataField {
     private String ans2;
     private String ans3;
     private String ans4;
-    private int rightAns;
+    private String rightAns;
 
     public DataField(String rawString) {
         String[] data = rawString.split("\\*");
@@ -19,8 +19,8 @@ public class DataField {
         for (int i = 1; i < data.length && !ansCheck; i++) {
             if (data[i].charAt(0) == '#') {
                 ansCheck = true;
-                this.rightAns = i;
                 data[i] = data[i].substring(1);
+                this.rightAns = data[i];
             }
         }
         this.question = data[0];
@@ -46,7 +46,7 @@ public class DataField {
         return ans3;
     }
 
-    public int getRightAns() {
+    public String getRightAns() {
         return rightAns;
     }
 

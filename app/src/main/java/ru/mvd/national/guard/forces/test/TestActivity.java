@@ -7,21 +7,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class TestActivity extends AppCompatActivity {
 
     private User user;
+    private ArrayList<String> selectedItems;
 
-    private ArrayList<HashMap<String, Object>> questionList;
-    ListView listView;
-
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
 
     private MenuItem next;
 
@@ -46,18 +47,20 @@ public class TestActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
+        listView = (ListView) findViewById(R.id.listView);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
         fio = (TextView)findViewById(R.id.fio);
         fio.setText(getIntent().getStringExtra("name"));
         question = (TextView)findViewById(R.id.question);
         questionNumber = (TextView)findViewById(R.id.questionNumber);
 
-        listView = (ListView) findViewById(R.id.listView);
-        questionList = new ArrayList<HashMap<String, Object>>();
+        selectedItems = new ArrayList<>();
+
 
         textFieldInitial();
-        currentInx++;
-        questionNumber.setText(getString(R.string.question_number_this) + currentInx);
 
+        questionNumber.setText(getString(R.string.question_number_this) + (currentInx + 1));
 
     }
 
@@ -79,41 +82,52 @@ public class TestActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.equals(next)) {
-            if (currentInx == user.getSize()) {
-                Intent intent = new Intent(TestActivity.this, MainActivity.class);
-                startActivity(intent);
+            byte selected = (byte)selectedItems.size();
+            if (selected == 0) {
+                Toast.makeText(this, "Выберите вариант ответа", Toast.LENGTH_LONG).show();
             } else {
-                textFieldInitial();
+                if (selected == 1 && selectedItems.get(0).equals(user.getTestQuestion(currentInx).getRightAns())) {
+                    Toast.makeText(this, "Well done!", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(this, "Bad one " + selectedItems.get(0), Toast.LENGTH_SHORT).show();
+                }
+                selectedItems.clear();
                 currentInx++;
-                questionNumber.setText(getString(R.string.question_number_this) + currentInx);
+                if (currentInx != user.getSize()) {
+                    textFieldInitial();
+                    questionNumber.setText(getString(R.string.question_number_this) + (currentInx + 1));
+                } else {
+                    Intent intent = new Intent(TestActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void textFieldInitial() {
-        HashMap<String, Object> q;
-        questionList.clear();
-        question.setText(user.getTestQuestion(currentInx).getQuestion());
-
-        q = new HashMap<>();
-        q.put("answer", user.getTestQuestion(currentInx).getAns1());
-        questionList.add(q);
-
-        q = new HashMap<>();
-        q.put("answer", user.getTestQuestion(currentInx).getAns2());
-        questionList.add(q);
-
-        q = new HashMap<>();
-        q.put("answer", user.getTestQuestion(currentInx).getAns3());
-        questionList.add(q);
-
-        q = new HashMap<>();
-        q.put("answer", user.getTestQuestion(currentInx).getAns4());
-        questionList.add(q);
-
-        SimpleAdapter adapter = new SimpleAdapter(this, questionList, R.layout.list_item, new String[]{"answer"}, new int[]{R.id.ans});
+        question.setText(user.getTestQuestion(currentInx).getQuestion() + "\n" + user.getTestQuestion(currentInx).getRightAns());
+        String[] items = {
+                user.getTestQuestion(currentInx).getAns1(),
+                user.getTestQuestion(currentInx).getAns2(),
+                user.getTestQuestion(currentInx).getAns3(),
+                user.getTestQuestion(currentInx).getAns4()
+        };
+        adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.questionItem, items);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedItem = ((TextView)view).getText().toString();
+                Toast.makeText(TestActivity.this, "You select item" + selectedItem, Toast.LENGTH_LONG).show();
+                if (selectedItems.contains(selectedItem)) {
+                    selectedItems.remove(selectedItem);
+                } else {
+                    selectedItems.add(selectedItem);
+                }
+            }
+        });
     }
 
 }

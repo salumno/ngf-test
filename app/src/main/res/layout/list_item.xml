@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<CheckedTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/questionItem"
+    android:background="@drawable/textview_border_black"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:paddingLeft="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:weightSum="1"
-        android:background="@drawable/textview_border_black"
-        android:layout_height="160dp">
-        <TextView
-            android:id="@+id/ans"
-            android:paddingLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.90" />
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-</LinearLayout>
+    android:layout_height="160dp" />
