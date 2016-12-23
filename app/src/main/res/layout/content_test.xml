@@ -26,14 +26,12 @@
         android:weightSum="1">
         <TextView
             android:id="@+id/fio"
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.60" />
 
         <TextView
             android:id="@+id/questionNumber"
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.40" />

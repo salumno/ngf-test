@@ -88,9 +88,11 @@ public class TestActivity extends AppCompatActivity {
             } else {
                 if (selected == 1 && selectedItems.get(0).equals(user.getTestQuestion(currentInx).getRightAns())) {
                     Toast.makeText(this, "Well done!", Toast.LENGTH_SHORT).show();
+                    user.setRightAnswerCount(user.getRightAnswerCount() + 1);
 
                 } else {
                     Toast.makeText(this, "Bad one " + selectedItems.get(0), Toast.LENGTH_SHORT).show();
+                    user.addIncorrectAnswerToList(user.getTestQuestion(currentInx));
                 }
                 selectedItems.clear();
                 currentInx++;
