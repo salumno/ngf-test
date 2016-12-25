@@ -16,6 +16,7 @@
     <ListView
         android:id="@+id/listViewIncorrectAnswers"
         android:background="@drawable/textview_border_black"
+        android:paddingTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

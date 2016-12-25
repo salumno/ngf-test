@@ -10,20 +10,12 @@ import android.os.Parcelable;
 public class DataFieldResult implements Parcelable {
 
     private String question;
-    private String ans1;
-    private String ans2;
-    private String ans3;
-    private String ans4;
     private String rightAns;
     private String userIncorrectAnswer;
 
 
     public DataFieldResult(DataField dataField, String userIncorrectAnswer) {
         question = dataField.getQuestion();
-        ans1 = dataField.getAns1();
-        ans2 = dataField.getAns2();
-        ans3 = dataField.getAns3();
-        ans4 = dataField.getAns4();
         rightAns = dataField.getRightAns();
         this.userIncorrectAnswer = userIncorrectAnswer;
     }
@@ -32,17 +24,21 @@ public class DataFieldResult implements Parcelable {
         return userIncorrectAnswer;
     }
 
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getRightAns() {
+        return rightAns;
+    }
+
     public String toString() {
-        String s = this.question + "\n" + "1. " + this.ans1 + "\n" + "2. " + this.ans2 + "\n" + "3. " + this.ans3 + "\n" + "4. " + this.ans4;
+        String s = this.question + "\n";
         return s;
     }
 
     protected DataFieldResult(Parcel in) {
         question = in.readString();
-        ans1 = in.readString();
-        ans2 = in.readString();
-        ans3 = in.readString();
-        ans4 = in.readString();
         rightAns = in.readString();
         userIncorrectAnswer = in.readString();
     }
@@ -67,10 +63,6 @@ public class DataFieldResult implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(question);
-        parcel.writeString(ans1);
-        parcel.writeString(ans2);
-        parcel.writeString(ans3);
-        parcel.writeString(ans4);
         parcel.writeString(rightAns);
         parcel.writeString(userIncorrectAnswer);
     }

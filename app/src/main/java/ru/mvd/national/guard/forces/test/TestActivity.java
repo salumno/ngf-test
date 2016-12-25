@@ -100,15 +100,20 @@ public class TestActivity extends AppCompatActivity {
                     textFieldInitial();
                     questionNumber.setText(getString(R.string.question_number_this) + (currentInx + 1));
                 } else {
-                    AlertDialog alertDialog = setBuilderSettings().create();
-                    alertDialog.show();
+                    if (user.getIncorrectAnswerSet().size() == 0) {
+                        AlertDialog alertDialog = setBuilderSettingsSingle().create();
+                        alertDialog.show();
+                    } else {
+                        AlertDialog alertDialog = setBuilderSettingsDouble().create();
+                        alertDialog.show();
+                    }
                 }
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private AlertDialog.Builder setBuilderSettings() {
+    private AlertDialog.Builder setBuilderSettingsDouble() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Тестирование завершено")
                 .setMessage("Вы ответили правильно на " + user.getRightAnswerCount() + " из " + user.getSize() + " вопросов.")
@@ -137,6 +142,28 @@ public class TestActivity extends AppCompatActivity {
                 });
         return builder;
     }
+
+    private AlertDialog.Builder setBuilderSettingsSingle() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Тестирование завершено")
+                .setMessage("Вы ответили правильно на все вопросы!")
+                .setPositiveButton("В главное меню", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(TestActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setCancelable(false)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        Toast.makeText(TestActivity.this, "Выберите дальнейшее действие", Toast.LENGTH_LONG).show();
+                    }
+                });
+        return builder;
+    }
+
 
     private void textFieldInitial() {
         question.setText(user.getTestQuestion(currentInx).getQuestion() + "\n" + user.getTestQuestion(currentInx).getRightAns());
