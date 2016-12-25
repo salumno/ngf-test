@@ -1,9 +1,12 @@
 package ru.mvd.national.guard.forces.test;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +22,8 @@ import java.util.ArrayList;
 public class TestActivity extends AppCompatActivity {
 
     private User user;
-    private ArrayList<String> selectedItems;
 
+    private ArrayList<String> selectedItems;
     private ListView listView;
     private ArrayAdapter<String> adapter;
 
@@ -42,7 +45,7 @@ public class TestActivity extends AppCompatActivity {
         toolbarSetting(toolbar);
 
         try {
-            user = new User(new DataSet(TestActivity.this));
+            user = new User(new DataSet(TestActivity.this), getIntent().getStringExtra("name"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -51,7 +54,7 @@ public class TestActivity extends AppCompatActivity {
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         fio = (TextView)findViewById(R.id.fio);
-        fio.setText(getIntent().getStringExtra("name"));
+        fio.setText(user.getUserName());
         question = (TextView)findViewById(R.id.question);
         questionNumber = (TextView)findViewById(R.id.questionNumber);
 
@@ -83,16 +86,13 @@ public class TestActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.equals(next)) {
             byte selected = (byte)selectedItems.size();
-            if (selected == 0) {
-                Toast.makeText(this, "Выберите вариант ответа", Toast.LENGTH_LONG).show();
+            if (selected == 0 || selected > 1) {
+                Toast.makeText(this, "Выберите 1 вариант ответа", Toast.LENGTH_SHORT).show();
             } else {
-                if (selected == 1 && selectedItems.get(0).equals(user.getTestQuestion(currentInx).getRightAns())) {
-                    Toast.makeText(this, "Well done!", Toast.LENGTH_SHORT).show();
+                if (selectedItems.get(0).equals(user.getTestQuestion(currentInx).getRightAns())) {
                     user.setRightAnswerCount(user.getRightAnswerCount() + 1);
-
                 } else {
-                    Toast.makeText(this, "Bad one " + selectedItems.get(0), Toast.LENGTH_SHORT).show();
-                    user.addIncorrectAnswerToList(user.getTestQuestion(currentInx));
+                    user.addIncorrectAnswerToList(currentInx, selectedItems.get(0));
                 }
                 selectedItems.clear();
                 currentInx++;
@@ -100,12 +100,42 @@ public class TestActivity extends AppCompatActivity {
                     textFieldInitial();
                     questionNumber.setText(getString(R.string.question_number_this) + (currentInx + 1));
                 } else {
-                    Intent intent = new Intent(TestActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    AlertDialog alertDialog = setBuilderSettings().create();
+                    alertDialog.show();
                 }
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private AlertDialog.Builder setBuilderSettings() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Тестирование завершено")
+                .setMessage("Вы ответили правильно на " + user.getRightAnswerCount() + " из " + user.getSize() + " вопросов.")
+                .setPositiveButton("Посмотреть ошибки", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(TestActivity.this, ResultActivity.class);
+                        ArrayList<DataFieldResult> list  = user.getIncorrectAnswerSet();
+                        intent.putExtra("incorrect", list);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Завершить тест", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(TestActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setCancelable(false)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        Toast.makeText(TestActivity.this, "Выберите дальнейшее действие", Toast.LENGTH_LONG);
+                    }
+                });
+        return builder;
     }
 
     private void textFieldInitial() {
@@ -122,7 +152,6 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedItem = ((TextView)view).getText().toString();
-                Toast.makeText(TestActivity.this, "You select item" + selectedItem, Toast.LENGTH_LONG).show();
                 if (selectedItems.contains(selectedItem)) {
                     selectedItems.remove(selectedItem);
                 } else {

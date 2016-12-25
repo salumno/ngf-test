@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.result_button_main_menu:
+            /*case R.id.result_button_main_menu:
                 intent = new Intent(MainActivity.this, ResultActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
             case R.id.exit_button_main_menu:
                 MainActivity.this.finish();
                 break;

@@ -10,7 +10,7 @@ import java.util.Random;
 public class TestQuestionSet {
 
     private DataField[] questionSet;
-    private int size = 60;
+    private int size = 5;
     private Random randomIndex;
 
     public TestQuestionSet(DataSet dataSet) {

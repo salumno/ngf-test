@@ -8,15 +8,17 @@ import java.util.ArrayList;
 
 public class User {
 
+    private String userName;
     private int rightAnswerCount;
     private TestQuestionSet testQuestionSet;
-    private ArrayList<DataField> incorrectAnswerSet;
+    private ArrayList<DataFieldResult> incorrectAnswerSet;
 
 
-    public User(DataSet dataSet) {
+    public User(DataSet dataSet, String userName) {
         testQuestionSet = new TestQuestionSet(dataSet);
         rightAnswerCount = 0;
         incorrectAnswerSet = new ArrayList<>();
+        this.userName = userName;
     }
 
     public DataField getTestQuestion(int index) {
@@ -35,8 +37,16 @@ public class User {
         this.rightAnswerCount = rightAnswer;
     }
 
-    public void addIncorrectAnswerToList(DataField incorrectAnswer) {
-        incorrectAnswerSet.add(incorrectAnswer);
+    public String getUserName() {
+        return userName;
     }
 
+    public ArrayList<DataFieldResult> getIncorrectAnswerSet() {
+        return incorrectAnswerSet;
+    }
+
+    public void addIncorrectAnswerToList(int index, String userAnswer) {
+        DataFieldResult dataFieldResult = new DataFieldResult(testQuestionSet.getQuestion(index), userAnswer);
+        incorrectAnswerSet.add(dataFieldResult);
+    }
 }
