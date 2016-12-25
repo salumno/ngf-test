@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity {
 
     private MenuItem ok;
@@ -42,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.equals(ok)) {
             Intent intent = new Intent(LoginActivity.this, TestActivity.class);
-            if (editTextCheck()) {
+            if (fioRegexCheck()) {
                 String exName = name.getText().toString().toUpperCase().substring(0,1);
                 String exSurname = surname.getText().toString();
                 String exPatronymic = patronymic.getText().toString().toUpperCase().substring(0,1);
@@ -57,12 +60,12 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean editTextCheck() {
-        if (surname.getText().length() != 0 && name.getText().length() != 0 && patronymic.getText().length() != 0) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean fioRegexCheck() {
+        Pattern p = Pattern.compile("[а-яА-я][-а-яА-я]*");
+        Matcher m = p.matcher(surname.getText());
+        Matcher m2 = p.matcher(name.getText());
+        Matcher m3 = p.matcher(patronymic.getText());
+        return m.matches() && m2.matches() && m3.matches();
     }
 
     private void toolbarSetting(Toolbar toolbar) {

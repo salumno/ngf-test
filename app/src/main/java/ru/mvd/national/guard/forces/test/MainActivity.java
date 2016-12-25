@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
-            /*case R.id.result_button_main_menu:
-                intent = new Intent(MainActivity.this, ResultActivity.class);
+            case R.id.result_button_main_menu:
+                intent = new Intent(MainActivity.this, ResultReviewActivity.class);
                 startActivity(intent);
-                break;*/
+                break;
             case R.id.exit_button_main_menu:
                 MainActivity.this.finish();
                 break;

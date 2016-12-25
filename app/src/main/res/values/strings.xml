@@ -14,7 +14,8 @@
     <string name="surname">Фамилия</string>
     <string name="patronymic">Отчество</string>
     <string name="startTest">Начать тест</string>
-    <string name="empty_field">Заполните все поля</string>
+    <string name="empty_field">Корректно заполните все поля(только кириллические символы)</string>
     <string name="next">next</string>
     <string name="question_number_this">"Вопрос "</string>
+    <string name="title_activity_result_review">ResultReviewActivity</string>
 </resources>

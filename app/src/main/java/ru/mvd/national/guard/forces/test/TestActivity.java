@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class TestActivity extends AppCompatActivity {
@@ -100,6 +104,8 @@ public class TestActivity extends AppCompatActivity {
                     textFieldInitial();
                     questionNumber.setText(getString(R.string.question_number_this) + (currentInx + 1));
                 } else {
+                    String result = user.getUserName() + " Правильных ответов: " + user.getRightAnswerCount();
+                    writeFile("results", result);
                     if (user.getIncorrectAnswerSet().size() == 0) {
                         AlertDialog alertDialog = setBuilderSettingsSingle().create();
                         alertDialog.show();
@@ -164,7 +170,6 @@ public class TestActivity extends AppCompatActivity {
         return builder;
     }
 
-
     private void textFieldInitial() {
         question.setText(user.getTestQuestion(currentInx).getQuestion() + "\n" + user.getTestQuestion(currentInx).getRightAns());
         String[] items = {
@@ -186,6 +191,41 @@ public class TestActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void writeFile(String name, String data) {
+        StringBuilder builder = openFile(name);
+        builder.append(data);
+        try {
+            OutputStream outputStream = openFileOutput(name, 0);
+            OutputStreamWriter osw = new OutputStreamWriter(outputStream);
+            osw.write(builder.toString());
+            osw.close();
+        } catch (Throwable t) {
+            Toast.makeText(getApplicationContext(),
+                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private StringBuilder openFile(String fileName) {
+        StringBuilder builder = new StringBuilder();
+        try {
+            InputStream inputStream = openFileInput(fileName);
+
+            if (inputStream != null) {
+                InputStreamReader isr = new InputStreamReader(inputStream);
+                BufferedReader reader = new BufferedReader(isr);
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line + "\n");
+                }
+                inputStream.close();
+            }
+        } catch (Throwable t) {
+            Toast.makeText(getApplicationContext(),
+                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+        }
+        return builder;
     }
 
 }

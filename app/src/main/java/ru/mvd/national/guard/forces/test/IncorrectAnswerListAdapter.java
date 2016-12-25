@@ -1,14 +1,12 @@
 package ru.mvd.national.guard.forces.test;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -16,12 +14,12 @@ import java.util.ArrayList;
  * Created by salumno on 25.12.16.
  */
 
-public class CustomListAdapter extends BaseAdapter {
+public class IncorrectAnswerListAdapter extends BaseAdapter {
 
     private ArrayList<DataFieldResult> listData;
     private LayoutInflater layoutInflater;
 
-    public CustomListAdapter(Context aContext, ArrayList<DataFieldResult> listData) {
+    public IncorrectAnswerListAdapter(Context aContext, ArrayList<DataFieldResult> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
