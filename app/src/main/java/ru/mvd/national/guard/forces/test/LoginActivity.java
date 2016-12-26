@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbarSetting(toolbar);
 
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, TestActivity.class);
             if (fioRegexCheck()) {
                 String exName = name.getText().toString().toUpperCase().substring(0,1);
-                String exSurname = surname.getText().toString();
+                String exSurname = surname.getText().toString().toUpperCase();
                 String exPatronymic = patronymic.getText().toString().toUpperCase().substring(0,1);
                 String extraName = exSurname + " " + exName + "." + exPatronymic + ".";
                 intent.putExtra("name",extraName);

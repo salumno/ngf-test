@@ -45,6 +45,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbarSetting(toolbar);
 
@@ -91,7 +92,7 @@ public class TestActivity extends AppCompatActivity {
         if (item.equals(next)) {
             byte selected = (byte)selectedItems.size();
             if (selected == 0 || selected > 1) {
-                Toast.makeText(this, "Выберите 1 вариант ответа", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.one_variant, Toast.LENGTH_SHORT).show();
             } else {
                 if (selectedItems.get(0).equals(user.getTestQuestion(currentInx).getRightAns())) {
                     user.setRightAnswerCount(user.getRightAnswerCount() + 1);
@@ -104,13 +105,13 @@ public class TestActivity extends AppCompatActivity {
                     textFieldInitial();
                     questionNumber.setText(getString(R.string.question_number_this) + (currentInx + 1));
                 } else {
-                    String result = user.getUserName() + " Правильных ответов: " + user.getRightAnswerCount();
+                    String result = user.getUserName() + getString(R.string.correct_answer_count) + user.getRightAnswerCount();
                     writeFile("results", result);
                     if (user.getIncorrectAnswerSet().size() == 0) {
                         AlertDialog alertDialog = setBuilderSettingsSingle().create();
                         alertDialog.show();
                     } else {
-                        AlertDialog alertDialog = setBuilderSettingsDouble().create();
+                        AlertDialog alertDialog = setBuilderSettingsBad().create();
                         alertDialog.show();
                     }
                 }
@@ -119,31 +120,25 @@ public class TestActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private AlertDialog.Builder setBuilderSettingsDouble() {
+    private AlertDialog.Builder setBuilderSettingsBad() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Тестирование завершено")
-                .setMessage("Вы ответили правильно на " + user.getRightAnswerCount() + " из " + user.getSize() + " вопросов.")
-                .setPositiveButton("Посмотреть ошибки", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.test_final)
+                .setMessage(getString(R.string.your_score) + user.getRightAnswerCount() + getString(R.string.from) + user.getSize() + getString(R.string.from_questions))
+                .setPositiveButton(R.string.mistake_check, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(TestActivity.this, ResultActivity.class);
                         ArrayList<DataFieldResult> list  = user.getIncorrectAnswerSet();
                         intent.putExtra("incorrect", list);
                         startActivity(intent);
-                    }
-                })
-                .setNegativeButton("Завершить тест", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(TestActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        finish();
                     }
                 })
                 .setCancelable(false)
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialogInterface) {
-                        Toast.makeText(TestActivity.this, "Выберите дальнейшее действие", Toast.LENGTH_LONG);
+                        Toast.makeText(TestActivity.this, R.string.choose_next_move, Toast.LENGTH_LONG);
                     }
                 });
         return builder;
@@ -151,12 +146,13 @@ public class TestActivity extends AppCompatActivity {
 
     private AlertDialog.Builder setBuilderSettingsSingle() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Тестирование завершено")
-                .setMessage("Вы ответили правильно на все вопросы!")
-                .setPositiveButton("В главное меню", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.test_final)
+                .setMessage(R.string.all_fine)
+                .setPositiveButton(R.string.to_main_menu, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(TestActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 })
@@ -164,14 +160,14 @@ public class TestActivity extends AppCompatActivity {
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialogInterface) {
-                        Toast.makeText(TestActivity.this, "Выберите дальнейшее действие", Toast.LENGTH_LONG).show();
+                        Toast.makeText(TestActivity.this, R.string.choose_next_move, Toast.LENGTH_LONG).show();
                     }
                 });
         return builder;
     }
 
     private void textFieldInitial() {
-        question.setText(user.getTestQuestion(currentInx).getQuestion() + "\n" + user.getTestQuestion(currentInx).getRightAns());
+        question.setText(user.getTestQuestion(currentInx).getQuestion());
         String[] items = {
                 user.getTestQuestion(currentInx).getAns1(),
                 user.getTestQuestion(currentInx).getAns2(),
@@ -222,8 +218,7 @@ public class TestActivity extends AppCompatActivity {
                 inputStream.close();
             }
         } catch (Throwable t) {
-            Toast.makeText(getApplicationContext(),
-                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Результаты сохранены", Toast.LENGTH_LONG).show();
         }
         return builder;
     }

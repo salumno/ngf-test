@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.exit_button_main_menu:
-                MainActivity.this.finish();
+                onBackPressed();
                 break;
         }
     }

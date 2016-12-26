@@ -3,10 +3,6 @@ package ru.mvd.national.guard.forces.test;
 import java.util.Arrays;
 import java.util.Random;
 
-/**
- * Created by salumno on 17.12.16.
- */
-
 public class TestQuestionSet {
 
     private DataField[] questionSet;

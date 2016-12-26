@@ -1,17 +1,11 @@
 package ru.mvd.national.guard.forces.test;
 
-
 import android.content.Context;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-
-/**
- * Created by salumno on 15.12.16.
- */
 
 public class DataSet {
 

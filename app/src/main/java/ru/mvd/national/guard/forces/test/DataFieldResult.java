@@ -3,10 +3,6 @@ package ru.mvd.national.guard.forces.test;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by salumno on 24.12.16.
- */
-
 public class DataFieldResult implements Parcelable {
 
     private String question;

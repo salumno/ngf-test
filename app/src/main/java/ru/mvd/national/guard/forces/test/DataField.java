@@ -1,9 +1,5 @@
 package ru.mvd.national.guard.forces.test;
 
-/**
- * Created by salumno on 15.12.16.
- */
-
 public class DataField {
 
     private String question;

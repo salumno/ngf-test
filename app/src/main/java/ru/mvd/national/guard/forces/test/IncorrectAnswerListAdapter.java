@@ -7,12 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
-
-/**
- * Created by salumno on 25.12.16.
- */
 
 public class IncorrectAnswerListAdapter extends BaseAdapter {
 

@@ -8,7 +8,7 @@
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="title_login">Введите свое <b>имя</b>, <b>фамилию</b> и <b>отчество</b>.\nПосле того, как Вы нажмете \"Начать тест\", Вам будет предложено <b>60</b> вопросов и 24 минуты времени.\n
+    <string name="title_login">Введите свое <b>имя</b>, <b>фамилию</b> и <b>отчество</b>.\nПосле того, как Вы нажмете на галочку в правом верхнем углу экрана, Вам будет предложено <b>60</b> вопросов с <b>4</b> вариантами ответа.\nУспехов!
     </string>
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
@@ -18,4 +18,26 @@
     <string name="next">next</string>
     <string name="question_number_this">"Вопрос "</string>
     <string name="title_activity_result_review">ResultReviewActivity</string>
+    <string name="clear">Очистить</string>
+    <string name="empty_result">Вы еще не прошли ни одного тестирования.</string>
+    <string name="by_the_way">Только вперед!</string>
+    <string name="current_result_activity_title">Результаты</string>
+    <string name="current_result_review_title">Достижения</string>
+    <string name="result_delete">Удаление результатов</string>
+    <string name="sure_message">Вы действительно хотите удалить весь прогресс?</string>
+    <string name="yes">Да</string>
+    <string name="delete_success">Результаты успешно удалены!</string>
+    <string name="delete_fail">Что-то пошло не так!</string>
+    <string name="no">Нет</string>
+    <string name="one_variant">Выберите 1 вариант ответа</string>
+    <string name="correct_answer_count">" Правильных ответов: "</string>
+    <string name="test_final">Тестирование завершено</string>
+    <string name="mistake_check">Посмотреть ошибки</string>
+    <string name="test_end">Завершить тест</string>
+    <string name="choose_next_move">Выберите дальнейшее действие</string>
+    <string name="all_fine">Вы ответили правильно на все вопросы!</string>
+    <string name="to_main_menu">В главное меню</string>
+    <string name="your_score">"Вы ответили правильно на "</string>
+    <string name="from">" из "</string>
+    <string name="from_questions">" вопросов."</string>
 </resources>

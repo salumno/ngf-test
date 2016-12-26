@@ -2,10 +2,6 @@ package ru.mvd.national.guard.forces.test;
 
 import java.util.ArrayList;
 
-/**
- * Created by salumno on 19.12.16.
- */
-
 public class User {
 
     private String userName;
